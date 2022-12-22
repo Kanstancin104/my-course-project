@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-// import axios from "axios";
+import axios from "axios";
 import Container from "react-bootstrap/Container";
 // import { useNavigate } from "react-router-dom";
 
@@ -8,11 +8,11 @@ export default function NewReview(props) {
   //   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [review, setReview] = useState({
-    reviewName: "",
-    itemName: "",
-    section: "",
+    title: "",
+    piece: "",
+    category: "",
     tags: "",
-    textReview: "",
+    content: "",
     image: "",
     grade: 0,
   });
@@ -25,20 +25,18 @@ export default function NewReview(props) {
       setValidated(true);
       return;
     }
-    // axios
-    //   .post("/api/users/", {
-    //     user_name: name,
-    //     email: email,
-    //     user_password: password,
-    //   })
-    //   .then(function (response) {
-    //     props.onAuth(response.data.token);
-    //     navigate("/Users");
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //     alert("Error occurred");
-    //   });
+
+    console.log(review);
+
+    axios
+      .post("http://localhost:5000/api/reviews/", review)
+      .then(function (response) {
+        // navigate("/Users");
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("Error occurred");
+      });
   };
 
   return (
@@ -49,10 +47,8 @@ export default function NewReview(props) {
             <Form.Label>Review Name</Form.Label>
             <Form.Control
               required
-              onChange={(e) =>
-                setReview({ ...review, reviewName: e.target.value })
-              }
-              value={review.reviewName}
+              onChange={(e) => setReview({ ...review, title: e.target.value })}
+              value={review.title}
               type="text"
             />
           </Form.Group>
@@ -60,10 +56,8 @@ export default function NewReview(props) {
             <Form.Label>Item Name</Form.Label>
             <Form.Control
               required
-              onChange={(e) =>
-                setReview({ ...review, itemName: e.target.value })
-              }
-              value={review.itemName}
+              onChange={(e) => setReview({ ...review, piece: e.target.value })}
+              value={review.piece}
               type="text"
               className="mt-1"
             />
@@ -71,10 +65,10 @@ export default function NewReview(props) {
           <Form.Group className="mt-3">
             <Form.Label>Section</Form.Label>
             <Form.Control
-              value={review.section}
+              value={review.category}
               required
               onChange={(e) =>
-                setReview({ ...review, section: e.target.value })
+                setReview({ ...review, category: e.target.value })
               }
               type="text"
               className="mt-1"
@@ -93,10 +87,10 @@ export default function NewReview(props) {
           <Form.Group className="mt-3">
             <Form.Label>Review text</Form.Label>
             <Form.Control
-              value={review.textReview}
+              value={review.content}
               required
               onChange={(e) =>
-                setReview({ ...review, textReview: e.target.value })
+                setReview({ ...review, content: e.target.value })
               }
               type="text"
               className="mt-1"
