@@ -15,6 +15,10 @@ app.get("/api/reviews", reviewHandlers.getReviews);
 app.put("/api/reviews/:id", reviewHandlers.updateReview);
 app.delete("/api/reviews/:id", reviewHandlers.deleteReview);
 
+app.get("/", (_, res) => {
+  res.sendStatus(200);
+});
+
 app.listen(port, (err) => {
   if (err) {
     console.error("Zdarylasia niesta kiepskaje");
