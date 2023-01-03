@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "prestart": "cd UI && npm run build",
     "server": "nodemon app.js",
     "ui": "npm start --prefix UI",
     "dev": "concurrently \"npm run server\" \"npm run ui\"",
