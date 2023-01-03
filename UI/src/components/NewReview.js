@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import { apiUrl } from "../const";
 import Container from "react-bootstrap/Container";
 // import { useNavigate } from "react-router-dom";
 
@@ -29,7 +30,7 @@ export default function NewReview(props) {
     console.log(review);
 
     axios
-      .post("http://localhost:5000/api/reviews/", review)
+      .post(`${apiUrl}/api/reviews/`, review)
       .then(function (response) {
         // navigate("/Users");
       })

@@ -1,5 +1,6 @@
 import Table from "react-bootstrap/Table";
 import axios from "axios";
+import { apiUrl } from "../const";
 import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 
@@ -9,7 +10,7 @@ function Review() {
 
   const getReviews = () => {
     axios
-      .get("http://localhost:5000/api/reviews/")
+      .get(`${apiUrl}/api/reviews/`)
       .then((result) => {
         setReviews(result.data);
       })
