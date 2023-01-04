@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { apiUrl } from "../const";
 import Container from "react-bootstrap/Container";
+import { useDropzone } from "react-dropzone";
 // import { useNavigate } from "react-router-dom";
 
 export default function NewReview(props) {
+  const onDrop = useCallback((acceptedFiles) => {
+    console.log(acceptedFiles.length);
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  if (props.token) {
+    axios.defaults.headers.common = { Authorization: `Bearer ${props.token}` };
+  }
+
   //   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [review, setReview] = useState({
@@ -99,6 +109,14 @@ export default function NewReview(props) {
           </Form.Group>
           <Form.Group className="mt-3">
             <Form.Label>Image</Form.Label>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              {isDragActive ? (
+                <p>Drop the files here ...</p>
+              ) : (
+                <p>Drag 'n' drop some files here, or click to select files</p>
+              )}
+            </div>
             <Form.Control
               value={review.image}
               required
