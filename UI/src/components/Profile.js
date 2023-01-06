@@ -6,20 +6,20 @@ import LogoutButton from "./LogoutButton";
 const Profile = (props) => {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
     useAuth0();
-
+  const { onAuth } = props;
   useEffect(() => {
     const getToken = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
 
-        props.onAuth(accessToken);
+        onAuth(accessToken);
       } catch (e) {
         console.log(e.message);
       }
     };
 
     getToken();
-  }, [getAccessTokenSilently, user?.sub]);
+  }, [getAccessTokenSilently, user?.sub, onAuth]);
 
   if (isLoading) {
     return <div>Loading ...</div>;

@@ -108,7 +108,7 @@ export default function NewReview(props) {
             />
           </Form.Group>
           <Form.Group className="mt-3">
-            <Form.Label>Image</Form.Label>
+            <Form.Label>Image (Optional)</Form.Label>
             <div {...getRootProps()}>
               <input {...getInputProps()} />
               {isDragActive ? (

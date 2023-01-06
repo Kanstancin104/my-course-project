@@ -1,6 +1,11 @@
 import React from "react";
-import Profile from "./Profile";
+import Review from "./Review";
 
-export default function HomePage(props) {
-  return <Profile onAuth={props.onAuth} />;
+export default function HomePage() {
+  return (
+    <>
+      <div>Home Page</div>
+      <Review />
+    </>
+  );
 }

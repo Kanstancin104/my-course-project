@@ -8,8 +8,8 @@ const app = express();
 const { auth, requiredScopes } = require("express-oauth2-jwt-bearer");
 
 const checkJwt = auth({
-  audience: "https://my-course-project-production.up.railway.app/",
-  issuerBaseURL: `https://dev-01gsmjnb7fd5w70o.us.auth0.com/`,
+  audience: process.env.AUTH0_AUDIENCE,
+  issuerBaseURL: process.env.AUTH0_ISSUER,
 });
 
 const checkRegularScopes = requiredScopes("regular");

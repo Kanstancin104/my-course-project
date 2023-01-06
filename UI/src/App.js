@@ -1,10 +1,11 @@
 import "./App.css";
 import React, { useState } from "react";
-import LoginButton from "./components/LoginButton";
-import NewReview from "./components/NewReview";
-import Review from "./components/Review";
-import LogoutButton from "./components/LogoutButton";
 import HomePage from "./components/HomePage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AdminPage from "./components/AdminPage";
+import PersonalPage from "./components/PersonalPage";
+import NoPage from "./components/NoPage";
+import Layout from "./components/Layout";
 
 function App() {
   const [token, setToken] = useState(undefined);
@@ -14,13 +15,16 @@ function App() {
   };
 
   return (
-    <>
-      <HomePage onAuth={handleAuth} />
-      <Review />
-      <NewReview token={token} />
-      <LoginButton />
-      <LogoutButton />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout onAuth={handleAuth} />}>
+          <Route index element={<HomePage onAuth={handleAuth} />} />
+          <Route path="admin" element={<AdminPage />} />
+          <Route path="personal" element={<PersonalPage token={token} />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
