@@ -4,9 +4,11 @@ import axios from "axios";
 import { apiUrl } from "../const";
 import Container from "react-bootstrap/Container";
 import { useDropzone } from "react-dropzone";
+import { useAuth0 } from "@auth0/auth0-react";
 // import { useNavigate } from "react-router-dom";
 
 export default function NewReview(props) {
+  const { user } = useAuth0();
   const onDrop = useCallback((acceptedFiles) => {
     console.log(acceptedFiles.length);
   }, []);
@@ -40,7 +42,11 @@ export default function NewReview(props) {
     console.log(review);
 
     axios
-      .post(`${apiUrl}/api/reviews/`, review)
+      .post(`${apiUrl}/api/reviews/`, {
+        ...review,
+        author: user.email,
+        created: new Date(),
+      })
       .then(function (response) {
         // navigate("/Users");
       })

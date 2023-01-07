@@ -2,7 +2,7 @@ const database = require("./database");
 
 const getReviews = (req, res) => {
   database
-    .query("select * from review")
+    .query("select * from review order by created desc")
     .then(([reviews]) => {
       res.json(reviews);
     })
@@ -20,7 +20,7 @@ const getReviewsById = (req, res) => {
   database
     .query("select * from review where id = ?", [id])
     .then(([reviews]) => {
-      if (movies[0] != null) {
+      if (reviews[0] != null) {
         res.json(reviews[0]);
       } else {
         res.status(404).send("Not Found");
@@ -32,13 +32,30 @@ const getReviewsById = (req, res) => {
     });
 };
 
+const getReviewsByAuthor = (req, res) => {
+  const author = req.params.author;
+
+  database
+    .query("select * from review where author = ?", [author])
+    .then(([reviews]) => {
+      res.json(reviews);
+    })
+    .catch((err) => {
+      console.error(err);
+      res
+        .status(500)
+        .send("Pamylka pry sprobie atrymac dadzienyja z bazy dadzienych");
+    });
+};
+
 const postReview = (req, res) => {
-  const { title, piece, category, tags, content, image, grade } = req.body;
+  const { title, piece, category, tags, content, image, grade, author } =
+    req.body;
 
   database
     .query(
-      "INSERT INTO review(title, piece, category, tags, content, image, grade) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [title, piece, category, tags, content, image, grade]
+      "INSERT INTO review(title, piece, category, tags, content, image, grade, author) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [title, piece, category, tags, content, image, grade, author]
     )
     .then(([result]) => {
       res.location(`/api/reviews/${result.insertId}`).sendStatus(201);
@@ -95,4 +112,5 @@ module.exports = {
   postReview,
   updateReview,
   deleteReview,
+  getReviewsByAuthor,
 };

@@ -14,7 +14,7 @@ root.render(
       clientId={authClientID}
       redirectUri={window.location.origin}
       audience={authAudience}
-      scope="regular"
+      scope="regular admin"
     >
       <App />
     </Auth0Provider>
